@@ -1,31 +1,39 @@
-import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import MainLayout from './layouts/MainLayout';
+import HomePage from './pages/HomePage';
+import ProductListPage from './pages/ProductListPage';
+import ProductDetailPage from './pages/ProductDetailPage';
+import CartPage from './pages/CartPage';
 import './App.css';
 
-function App() {
-  const [serverStatus, setServerStatus] = useState('Connecting to Backend...');
-
-  useEffect(() => {
-    // Calling our Express API endpoint
-    fetch('http://localhost:5000/api/health')
-      .then((res) => res.json())
-      .then((data) => {
-        setServerStatus(data.message);
-      })
-      .catch((err) => {
-        console.error('Error connecting to backend:', err);
-        setServerStatus('Failed to connect to backend.');
-      });
-  }, []);
-
+// Simple fallback component for invalid URLs
+function NotFoundPage() {
   return (
-    <div className="app-container">
-      <h1>E-Commerce Storefront</h1>
-      <p>Phase 1: Full-Stack Architecture Handshake Test</p>
-      
-      <div className={`badge ${serverStatus.includes('smoothly') ? 'badge-success' : 'badge-loading'}`}>
-        Backend Status: {serverStatus}
-      </div>
+    <div className="error-container">
+      <h2>404 - Page Not Found</h2>
+      <p>The page you are looking for does not exist.</p>
+      <Link to="/" className="btn-primary">Return to Home</Link>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Parent Route with shared MainLayout */}
+        <Route path="/" element={<MainLayout />}>
+          {/* Child Routes */}
+          <Route index element={<HomePage />} />
+          <Route path="products" element={<ProductListPage />} />
+          <Route path="products/:id" element={<ProductDetailPage />} />
+          <Route path="cart" element={<CartPage />} />
+          
+          {/* Catch-all 404 Route */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
