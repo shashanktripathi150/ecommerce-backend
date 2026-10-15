@@ -47,7 +47,7 @@ const sampleProducts = [
     stock: 40,
     rating: 4.4,
     numReviews: 19,
-    imageUrl: 'https://images.unsplash.com/photo-1622445262464-84b1456045b6?w=500'
+    imageUrl: 'https://media.istockphoto.com/id/2295723211/photo/3-in-1-wireless-charger.webp?a=1&b=1&s=612x612&w=0&k=20&c=j5wfIp321F0hQRzS5e-mrFp3ihTytkU-OgVz4IMQ7ZM='
   }
 ];
 
